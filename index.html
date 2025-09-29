@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fullscreen Iframe dengan Admin Tersembunyi</title>
+
+  <script>
+    // Hayo... mau ngapain?
+    // Mau bajak kode? ga bisa...
+    // mau hack? ga bisa...
+    // wkwkwkwk
+    // Kasian banget.. mending ga usah buka konsole... wkwkwk
+  </script>
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      background: #000;
+    }
+    #iframeContainer {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    /* Form admin tersembunyi */
+    #adminForm {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(20,20,20,0.95);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px #000;
+      z-index: 9999;
+      color: #fff;
+    }
+    #adminForm input {
+      width: 300px;
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      margin-right: 10px;
+    }
+    #adminForm button {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      background: #1e90ff;
+      color: #fff;
+      cursor: pointer;
+    }
+    #adminForm button:hover {
+      background: #0c65c1;
+    }
+  </style>
+</head>
+<body>
+
+  <iframe id="iframeContainer" src="" frameborder="0"></iframe>
+
+  <!-- Form admin -->
+  <div id="adminForm">
+    <input type="text" id="newUrl" placeholder="Masukkan URL baru">
+    <button id="saveUrl">Simpan</button>
+    <button id="closeForm">Tutup</button>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+  <script>
+    // Konfigurasi Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyCba6M_spBXvuG91Zn-XWJ4bSTX6vNcST0",
+      authDomain: "index-68220.firebaseapp.com",
+      databaseURL: "https://index-68220-default-rtdb.firebaseio.com",
+      projectId: "index-68220",
+      storageBucket: "index-68220.firebasestorage.app",
+      messagingSenderId: "633087068802",
+      appId: "1:633087068802:web:f8aa1f2ef9c00b99d1429b",
+      measurementId: "G-2VQCRFJQCM"
+    };
+
+    // Inisialisasi Firebase
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+
+    const iframe = document.getElementById('iframeContainer');
+    const urlRef = database.ref('iframeURL');
+
+    // Load URL dari Firebase
+    urlRef.on('value', (snapshot) => {
+      const url = snapshot.val();
+      if (url) {
+        iframe.src = url;
+      } else {
+        iframe.src = "about:blank";
+      }
+    });
+
+    // Tombol dan form
+    const adminForm = document.getElementById('adminForm');
+    const newUrlInput = document.getElementById('newUrl');
+    const saveUrlBtn = document.getElementById('saveUrl');
+    const closeFormBtn = document.getElementById('closeForm');
+
+    // Tampilkan form saat Ctrl + Shift + A
+    document.addEventListener('keydown', function(e) {
+      if (e.ctrlKey && e.shiftKey && e.code === 'KeyA') {
+        adminForm.style.display = adminForm.style.display === 'block' ? 'none' : 'block';
+        if (adminForm.style.display === 'block') {
+          newUrlInput.value = iframe.src;
+          newUrlInput.focus();
+        }
+      }
+    });
+
+    // Simpan URL baru ke Firebase
+    saveUrlBtn.addEventListener('click', () => {
+      const newUrl = newUrlInput.value.trim();
+      if (newUrl) {
+        urlRef.set(newUrl);
+        adminForm.style.display = 'none';
+      }
+    });
+
+    // Tutup form
+    closeFormBtn.addEventListener('click', () => {
+      adminForm.style.display = 'none';
+    });
+  </script>
+
+</body>
+</html>
