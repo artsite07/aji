@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fullscreen Iframe dengan Admin Tersembunyi</title>
+  <title>Adlan Madjied Ridho</title>
+  <link rel="icon" href="1.png">
 
   <script>
     // Hayo... mau ngapain?
@@ -14,18 +16,21 @@
   </script>
 
   <style>
-    html, body {
+    html,
+    body {
       margin: 0;
       padding: 0;
       height: 100%;
       overflow: hidden;
       background: #000;
     }
+
     #iframeContainer {
       width: 100%;
       height: 100%;
       border: none;
     }
+
     /* Form admin tersembunyi */
     #adminForm {
       display: none;
@@ -33,13 +38,14 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      background: rgba(20,20,20,0.95);
+      background: rgba(20, 20, 20, 0.95);
       padding: 20px;
       border-radius: 10px;
       box-shadow: 0 0 20px #000;
       z-index: 9999;
       color: #fff;
     }
+
     #adminForm input {
       width: 300px;
       padding: 10px;
@@ -47,6 +53,7 @@
       border: none;
       margin-right: 10px;
     }
+
     #adminForm button {
       padding: 10px 15px;
       border: none;
@@ -55,11 +62,13 @@
       color: #fff;
       cursor: pointer;
     }
+
     #adminForm button:hover {
       background: #0c65c1;
     }
   </style>
 </head>
+
 <body>
 
   <iframe id="iframeContainer" src="" frameborder="0"></iframe>
@@ -138,4 +147,5 @@
   </script>
 
 </body>
+
 </html>
